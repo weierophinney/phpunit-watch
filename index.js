@@ -54,6 +54,7 @@ setTimeout(function() {
 
 var running = false;
 var backoff = 0;
+var phpunitExecutable = locatePhpunit(path);
 
 function phpunit(path) {
   if (! path || warmup) {
@@ -78,8 +79,8 @@ function phpunit(path) {
   }
 
   running = true;
-  console.log('Executing PHPUnit');
-  exec('phpunit', function (error, stdout, stderr) {
+  console.log('Executing PHPUnit (', phpunitExecutable, ')');
+  exec(phpunitExecutable, function (error, stdout, stderr) {
     console.log(stdout);
     console.error(stderr);
     if (error !== null) {
@@ -93,4 +94,29 @@ function phpunit(path) {
 
 function errorHandler (error) {
   console.error('Error watching filesystem:', error);
+}
+
+function locatePhpunit(path) {
+  var phpunit;
+  var test;
+  var locations = [
+    path + '/vendor/bin/phpunit',
+    path + '/bin/phpunit'
+  ];
+
+  for (var i = 0; i < locations.length; i += 1) {
+    test = locations[i];
+    if (! fs.existsSync(test)) {
+      continue;
+    }
+
+    phpunit = test;
+    break;
+  }
+
+  if (! phpunit) {
+    phpunit = 'phpunit';
+  }
+
+  return phpunit;
 }
