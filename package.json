@@ -1,0 +1,19 @@
+{
+  "name": "phpunit-watch",
+  "version": "0.1.0",
+  "description": "Execute PHPUnit when changes happen in a directory you're watching",
+  "main": "index.js",
+  "dependencies": {
+    "chokidar": "~0.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "phpunit"
+  ],
+  "author": "Matthew Weier O'Phinney",
+  "license": "MIT"
+}
